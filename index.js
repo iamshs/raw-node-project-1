@@ -7,12 +7,20 @@ Description : A restful API to monitor up and down time of a user defined links
 const {handleReqRes} = require("./helpers/handleReqRes") ;
 const http = require("http") ;
 const env = require("./helpers/environments") ;
+const data = require("./lib/data")
 
 
 // app object - module scaffolding
 
 const app = {} ;
 
+//testing file system
+
+// @TODO: pore muche dibo
+
+data.create("test", "newFile" , {"name" : "Bangladesh" , "language" : "Bangla"} , (err) =>{
+  console.log(err);
+})
 
 //create-server
 
