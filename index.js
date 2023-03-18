@@ -18,8 +18,8 @@ const app = {} ;
 
 // @TODO: pore muche dibo
 
-data.create("test", "newFile" , {"name" : "Bangladesh" , "language" : "Bangla"} , (err) =>{
-  console.log(err);
+data.read("test", "newFile" , (err , data) =>{
+  console.log(err , data);
 })
 
 //create-server
