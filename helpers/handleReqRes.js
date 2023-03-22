@@ -9,6 +9,7 @@ const url = require("url") ;
 const {StringDecoder} = require("string_decoder") ;
 const routes = require("../routes") ;
 const {notFoundHandle} = require("../handlers/routeHandler/notFoundHandler") ;
+const {parseJson} = require("../helpers/utilities") ;
 
 // module scaffolding
 const handler = {} ;
@@ -35,7 +36,7 @@ handler.handleReqRes =(req , res) =>{
    const decoder = new StringDecoder("utf-8") ;
    let realData = "" ;
 
-   
+   const chosenHandler = routes[trimmedPath] ? routes[trimmedPath] : notFoundHandle ;
    
    req.on("data" , (buffer) =>{
     realData += decoder.write(buffer) ;
@@ -43,7 +44,10 @@ handler.handleReqRes =(req , res) =>{
    
    req.on("end" , () =>{
      realData += decoder.end() ;
-     const chosenHandler = routes[trimmedPath] ? routes[trimmedPath] : notFoundHandle ;
+     requestProperties.realData = parseJson(realData) ;
+
+
+    
      chosenHandler(requestProperties , (statusCode , payload) =>{
        statusCode = typeof(statusCode) === "number" ? statusCode : 500 ;
        payload = typeof(payload) === "object" ? payload : {} ;
